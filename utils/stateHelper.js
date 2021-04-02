@@ -1,10 +1,11 @@
+const api = require("./api").api();
 const os = require("os");
 const fs = require("fs").promises;
 const parse = require("csv-parse/lib/sync");
 const fetch = require("node-fetch");
-module.exports.getStatesData = async () => {
+module.exports.getStatesData = async (apiName) => {
   try {
-    const target = `https://api.covid19india.org/csv/latest/state_wise.csv`; //file
+    const target = api[apiName]; //file
     const res = await fetch(target, {
       method: "get",
       headers: {
@@ -42,11 +43,11 @@ module.exports.getStatesData = async () => {
 };
 
 module.exports.queryData = (queryData, queryField, data) => {
-  let reqData = {};
+  let reqData = [];
   data.forEach((data) => {
     if (data[queryField] === queryData) {
-      reqData = data;
+      reqData.push(data);
     }
   });
-  return reqData;
+  return { reqData };
 };

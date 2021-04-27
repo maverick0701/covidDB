@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const port = 8000;
-
+const cors = require("cors");
+app.use(cors());
+app.options("http://localhost:3000/", cors());
 // const os = require("os");
 // const fs = require("fs").promises;
 // const parse = require("csv-parse/lib/sync");

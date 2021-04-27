@@ -10,11 +10,13 @@
   "author": "MADHAV ANAND",
   "license": "ISC",
   "dependencies": {
+    "chart.js": "^3.1.1",
     "cors": "^2.8.5",
     "csv": "^5.4.0",
     "csv-parse": "^4.15.3",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "react-chartjs-2": "^3.0.2"
   }
 }

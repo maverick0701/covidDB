@@ -8,6 +8,13 @@ module.exports.api = () => {
       "http://api.covid19india.org/csv/latest/vaccine_doses_statewise.csv",
     cowin_vaccine_data_statewise:
       "http://api.covid19india.org/csv/latest/cowin_vaccine_data_statewise.csv",
+    case_time_series:
+      "https://api.covid19india.org/csv/latest/case_time_series.csv",
+    state_time_series: "https://api.covid19india.org/csv/latest/states.csv",
+    district_wise_data:
+      "https://api.covid19india.org/csv/latest/district_wise.csv",
+    data_by_state_by_name:
+      "https://api.covid19india.org/csv/latest/state_wise.csv",
   };
   return api;
 };

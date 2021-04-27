@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const index_controller = require("../controller/index");
-router.get("/states", index_controller.getStates);
-router.get("/getState", index_controller.getByStateName);
+const cors = require("cors");
+router.get("/states", cors(), index_controller.getStates);
+router.get("/getState", cors(), index_controller.getByStateName);
+router.get("/getIndiaSeriesData", cors(), index_controller.getInidaSeriesData);
+router.get("/getStateSeriesData", cors(), index_controller.getStateSeriesData);
+router.get("/getDistrictData", cors(), index_controller.districtWiseData);
 module.exports = router;

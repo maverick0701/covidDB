@@ -15,6 +15,8 @@ module.exports.api = () => {
       "https://api.covid19india.org/csv/latest/district_wise.csv",
     data_by_state_by_name:
       "https://api.covid19india.org/csv/latest/state_wise.csv",
+    hopitalList:
+      "https://life-api.coronasafe.network/data/hospital_clinic_centre_verified.json",
   };
   return api;
 };

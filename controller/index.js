@@ -3,7 +3,7 @@ const search = require("../utils/stateHelper").queryData;
 const transformData = require("../utils/stateHelper").transformData;
 const queriedStatesData = require("../utils/stateHelper").queriedStatesData;
 const getStateWiseData = require("../utils/stateHelper").getStateWiseData;
-const Twit = require("../config/twit").Twit;
+
 module.exports.getStates = async (req, res) => {
   const { apiName } = req.query;
   let data = await getStatesData(apiName);
@@ -65,22 +65,3 @@ module.exports.districtWiseData = async (req, res) => {
     message: "sucess",
   });
 };
-
-module.exports.getTwitterData = async function () {
-  let T = Twit();
-
-  T.get(
-    "search/tweets",
-    { q: "delhi oxygen", count: 1 },
-    function (err, data, response) {
-      let tweets = data.statuses;
-      tweets.forEach((element) => {
-        console.log(element);
-        console.log(element.text);
-        console.log("tweet ends");
-      });
-    }
-  );
-};
-
-module.exports.getTweets = async (req, res) => {};

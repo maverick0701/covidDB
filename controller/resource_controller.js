@@ -11,7 +11,7 @@ function searchHospital(data, state) {
   return resultArray;
 }
 
-module.exports.getHospitalList = async function (req, res) {
+module.exports.getHospitalList = function (req, res) {
   let { location } = req.query;
   let urls = api.hopitalList;
   let promise = new Promise(function (resolve, reject) {
@@ -30,6 +30,25 @@ module.exports.getHospitalList = async function (req, res) {
     return res.json(201, {
       message: "success",
       data: resultArray,
+    });
+  });
+};
+module.exports.getOxyList = function (req, res) {
+  let { location } = req.query;
+  let urls = api.oxygenList;
+  new Promise(function (resolve, reject) {
+    axios.get(urls).then((data) => {
+      let result = searchHospital(data.data.data, location);
+      if (result) {
+        resolve(result);
+      } else {
+        reject(err);
+      }
+    });
+  }).then(function (data) {
+    return res.json(201, {
+      message: "success",
+      data: data.reverse(),
     });
   });
 };

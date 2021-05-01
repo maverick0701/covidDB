@@ -13,4 +13,5 @@ router.get("/getDistrictData", cors(), index_controller.districtWiseData);
 router.get("/getTweets", cors(), tweets_controller.getAllTweets);
 router.get("/getHospitalList", cors(), resource_controller.getHospitalList);
 
+router.get("/getOxyList", cors(), resource_controller.getOxyList);
 module.exports = router;

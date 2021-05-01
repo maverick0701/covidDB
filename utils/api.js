@@ -17,6 +17,7 @@ module.exports.api = () => {
       "https://api.covid19india.org/csv/latest/state_wise.csv",
     hopitalList:
       "https://life-api.coronasafe.network/data/hospital_clinic_centre_verified.json",
+    oxygenList: "https://life-api.coronasafe.network/data/oxygen_verified.json",
   };
   return api;
 };

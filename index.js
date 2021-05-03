@@ -6,10 +6,13 @@ const db = require("./config/mongoose");
 const passport = require("passport");
 const passportJwt = require("./config/passport-jwt");
 app.use(cors());
+const chatServer = require("http").Server(app);
+const chatsSockets = require("./config/chatSocket").chatSockets(chatServer);
+chatServer.listen(5000);
 app.options("http://localhost:3000/", cors());
+app.options("http://localhost:5000/", cors());
 
 app.use(express.urlencoded());
-
 app.use(passport.initialize());
 app.use(passport.session());
 

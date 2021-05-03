@@ -2,7 +2,6 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 module.exports.createSession = async function (req, res) {
-  console.log("hihihi");
   try {
     let user = await User.findOne({ email: req.body.email });
 
@@ -11,11 +10,11 @@ module.exports.createSession = async function (req, res) {
         message: "Invalid username or password",
       });
     }
-
+    let newUser = { email: user.email, id: user._id };
     return res.json(200, {
       message: "Sign in successful, here is your token, please keep it safe!",
       data: {
-        token: jwt.sign(user.toJSON(), "covidDB", { expiresIn: "100000" }),
+        token: jwt.sign(newUser, "covidDB", { expiresIn: "100000" }),
       },
     });
   } catch (err) {

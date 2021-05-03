@@ -58,7 +58,7 @@ module.exports.getAllTweets = function (req, res) {
         count: 5,
       },
       function (err, data, response) {
-        console.log(err);
+        // console.log(err);
         let status = data.statuses;
         let tweets = getTextAndUser(status);
         if (tweets) {

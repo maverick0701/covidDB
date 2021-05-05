@@ -18,6 +18,8 @@ module.exports.api = () => {
     hopitalList:
       "https://life-api.coronasafe.network/data/hospital_clinic_centre_verified.json",
     oxygenList: "https://life-api.coronasafe.network/data/oxygen_verified.json",
+    diagnosis: "https://api.infermedica.com/covid19/diagnosis",
+    triage: "https://api.infermedica.com/covid19/triage",
   };
   return api;
 };

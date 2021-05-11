@@ -11,7 +11,13 @@ module.exports.createSession = async function (req, res) {
         message: "Invalid username or password",
       });
     }
-    let newUser = { email: user.email, id: user._id };
+    console.log(user.sex);
+    let newUser = {
+      email: user.email,
+      id: user._id,
+      gender: user.gender,
+      age: user.age,
+    };
     return res.json(200, {
       message: "Sign in successful, here is your token, please keep it safe!",
       data: {
@@ -27,7 +33,7 @@ module.exports.createSession = async function (req, res) {
 };
 
 module.exports.signUp = function (req, res) {
-  if (req.body.password !== req.body.confirm_password) {
+  if (req.body.password !== req.body.confirmPassword) {
     return res.json(401, {
       data: {
         message: "password and confirm password doesnot match",
@@ -39,6 +45,7 @@ module.exports.signUp = function (req, res) {
       return res.json(402, {
         data: {
           message: "user already exsits",
+          success: false,
         },
       });
     } else {
@@ -47,13 +54,25 @@ module.exports.signUp = function (req, res) {
           name: req.body.name,
           password: req.body.password,
           email: req.body.email,
+          age: req.body.age,
+          gender: req.body.gender,
         },
         (err, user) => {
-          return res.json(202, {
-            data: {
-              message: "user created",
-            },
-          });
+          if (user) {
+            return res.json(202, {
+              data: {
+                message: "user created",
+                success: true,
+              },
+            });
+          } else if (err) {
+            return res.json(201, {
+              data: {
+                message: "Validation Error Please Input All The field",
+                success: false,
+              },
+            });
+          }
         }
       );
     }
@@ -64,6 +83,7 @@ module.exports.failiureRedirect = (req, res) => {
   return res.json("402", {
     data: {
       message: "invalid username or password",
+      success: false,
     },
   });
 };

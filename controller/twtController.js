@@ -21,16 +21,18 @@ function getTweetLink(data) {
 
 function getTextAndUser(data) {
   let tweets = [];
-  data.forEach((element) => {
-    let newTweet = {};
-    newTweet.txt = element.text;
-    newTweet.userName = element.user.name;
-    newTweet.screenName = element.user.screen_name;
-    newTweet.hashtag = getHastagInfo(element.entities);
-    // newTweet.user_mentions = getUserMention(element.entities);
-    newTweet.userLink = getTweetLink(element.user.screen_name);
-    tweets.push(newTweet);
-  });
+  if (data) {
+    data.forEach((element) => {
+      let newTweet = {};
+      newTweet.txt = element.text;
+      newTweet.userName = element.user.name;
+      newTweet.screenName = element.user.screen_name;
+      newTweet.hashtag = getHastagInfo(element.entities);
+      // newTweet.user_mentions = getUserMention(element.entities);
+      newTweet.userLink = getTweetLink(element.user.screen_name);
+      tweets.push(newTweet);
+    });
+  }
   // console.log(tweets);
   return tweets;
 }

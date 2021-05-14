@@ -1,4 +1,4 @@
-/node_modules
-/env
-/api
-/config
+# /node_modules
+# /env
+# /api
+# /config

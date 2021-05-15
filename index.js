@@ -5,6 +5,7 @@ const cors = require("cors");
 const db = require("./config/mongoose");
 const passport = require("passport");
 const passportJwt = require("./config/passport-jwt");
+const insDb = require("./controller/dbController");
 app.use(cors());
 const chatServer = require("http").Server(app);
 let chatsSockets = require("./config/chatSocket").chatSockets(chatServer);

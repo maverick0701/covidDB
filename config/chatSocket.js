@@ -1,154 +1,9 @@
 let api = require("../utils/api").api;
 let axios = require("axios");
-
-// class ChatBot {
-//   constructor() {
-//     this.question = [];
-//     this.ans = [];
-//     this.length = 0;
-//     this.current = 0;
-//     this.shouldStop;
-//   }
-//   initialise(stop) {
-//     this.question = [];
-//     this.length = 0;
-//     this.current = 0;
-//     this.shouldStop = stop;
-//   }
-//   enteryForGroupMultiple(datas, type, stop) {
-//     this.initialise(stop);
-//     datas.forEach((data) => {
-//       let newquestion = {};
-//       newquestion.name = data.name;
-//       newquestion.id = data.id;
-//       newquestion.choices = data.choices;
-//       newquestion.type = type;
-//       this.question.push(newquestion);
-//     });
-//     console.log(this.question);
-//     this.current = 0;
-//     this.length = this.question.length;
-//   }
-
-//   handleGroupSingle(text, items, stop, type) {
-//     this.initialise(stop);
-//     items.forEach((ques) => {
-//       let newquestion = {};
-//       newquestion.id = ques.id;
-//       newquestion.name = ques.name;
-//       newquestion.choices = ques.choices;
-//       this.question.push(newquestion);
-//     });
-//   }
-
-//   poulateQuestion(items, type, stop, question) {
-//     // console.log(items);
-//     if (type == "group_multiple")
-//       this.enteryForGroupMultiple(items, type, stop);
-//     if (type == "group_single")
-//       this.handleGroupSingle(question.text, items, type, stop);
-//   }
-//   checkShouldStop() {
-//     return this.shouldStop;
-//   }
-//   incrementCurrent() {
-//     this.current++;
-//   }
-// }
-
-// function onJoinRoom(data, socket, io) {
-//   socket.join(data.chatRoom);
-//   let newBot;
-//   return new Promise(function (resolve, reject) {
-//     fetchDataForBot([], headers, urls).then((res) => {
-//       newBot = new ChatBot();
-//       callPopulateQuestion(res, newBot);
-//       io.in(data.chatRoom).emit("userJoined", newBot.question[0]);
-//       newBot.current++;
-//       if (res) {
-//         resolve(newBot);
-//       } else {
-//         reject("socket error");
-//       }
-//     });
-//   });
-// }
-
-// function fetchDataForBot(evidence, headers, urls) {
-//   return axios.post(
-//     urls,
-//     {
-//       sex: "male",
-//       age: 30,
-//       evidence: evidence,
-//     },
-//     {
-//       headers: headers,
-//     }
-//   );
-// }
-
-// function callPopulateQuestion(res, Bot) {
-//   console.log(res.data.question.type);
-//   Bot.poulateQuestion(
-//     res.data.question.items,
-//     res.data.question.type,
-//     res.data.should_stop,
-//     res.data.question
-//   );
-// }
-
-// function handleShouldStopFalse(newBot, chatRoom, io) {
-//   fetchDataForBot(newBot.ans, headers, urls).then((res) => {
-//     callPopulateQuestion(res, newBot);
-//     io.in(chatRoom).emit("userJoined", newBot.question[0]);
-//     newBot.incrementCurrent();
-//   });
-// }
-
-// function handleShouldStopTrue(newBot, chatRoom, io, evidence) {
-//   console.log(evidence);
-//   let urls = api().triage;
-//   fetchDataForBot(evidence, headers, urls).then((res) => {
-//     console.log(res.data);
-//   });
-// }
-
-// module.exports.chatSockets = function (socketServer) {
-//   let newBot;
-//   const io = require("socket.io")(socketServer, {
-//     cors: {
-//       origin: "http://localhost:3000",
-//       methods: ["GET", "POST"],
-//       credentials: true,
-//     },
-//   });
-
-//   io.sockets.on("connection", function (socket) {
-//     console.log("connection has begun");
-//
-//     socket.on("joinRoom", function (data) {
-//       onJoinRoom(data, socket, io).then((Bot) => {
-//         newBot = Bot;
-//       });
-//     });
-//     socket.on("answerChat", function (data) {
-//       newBot.ans.push(data.ans);
-//       if (newBot.current < newBot.length) {
-//         io.in(data.chatRoom).emit(
-//           "recieveMessage",
-//           newBot.question[newBot.current]
-//         );
-//         newBot.incrementCurrent();
-//       } else {
-//         if (!newBot.checkShouldStop())
-//           handleShouldStopFalse(newBot, data.chatRoom, io);
-//         else handleShouldStopTrue(newBot, data.chatRoom, io, newBot.ans);
-//       }
-//     });
-//   });
-// };
-
+let inferciaKey = require("./infermedica").getInferMecdicaKey();
+let appId = inferciaKey["APP-ID"];
+let appKey = inferciaKey["App-Key"];
+let env = require("./environment");
 class ChatBot {
   constructor(chatRoom) {
     this.question = {};
@@ -161,10 +16,11 @@ class ChatBot {
     this.gender;
     this.headers = {
       "content-type": "application/json",
-      "APP-ID": "347f22ef",
-      "App-Key": "981911ee7b91e67e79effcfd315fe18e",
+      "APP-ID": appId,
+      "App-Key": appKey,
     };
   }
+
   fetchDataForBot(evidence) {
     let newAge = parseInt(this.age);
     let newData = { sex: this.gender, age: newAge, evidence: evidence };
@@ -252,7 +108,7 @@ class ChatEngine {
   connectionHandler = (socketServer) => {
     this.io = require("socket.io")(socketServer, {
       cors: {
-        origin: "http://localhost:3000",
+        origin: env.chatBotOrigin,
         methods: ["GET", "POST"],
         credentials: true,
       },
@@ -263,7 +119,7 @@ class ChatEngine {
       socket.on("disconnect", function () {
         console.log("disconnected");
       });
-      socket.on("persistingConnection", function (data) {});
+      // socket.on("persistingConnection", function (data) {});
 
       socket.on("joinChat", function (data) {
         socket.join(data.chatRoom);

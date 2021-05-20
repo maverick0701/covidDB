@@ -28,7 +28,7 @@ module.exports.getInidaSeriesData = async (req, res) => {
   const { apiName, key } = req.query;
   let searchResult = await getStatesData(apiName);
   let resultArray = await transformData({ key, searchResult });
-  console.log(resultArray);
+  // console.log(resultArray);
   return res.json(201, {
     message: "Successfully Queried States",
     data: {

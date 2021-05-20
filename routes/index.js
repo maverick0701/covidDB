@@ -19,5 +19,6 @@ router.get("/getOxyList", cors(), resource_controller.getOxyList);
 
 router.post("/signUp", user_controller.signUp);
 router.post("/signIn", user_controller.createSession);
+router.post("/profile", cors(), user_controller.upadate);
 
 module.exports = router;

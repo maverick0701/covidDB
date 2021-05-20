@@ -11,7 +11,7 @@ module.exports.createSession = async function (req, res) {
         message: "Invalid username or password",
       });
     }
-    console.log(user.sex);
+    // console.log(user.sex);
     let newUser = {
       email: user.email,
       id: user._id,
@@ -85,5 +85,43 @@ module.exports.failiureRedirect = (req, res) => {
       message: "invalid username or password",
       success: false,
     },
+  });
+};
+
+module.exports.upadate = function (req, res) {
+  console.log("update");
+  let { email, password, age, gender, oldPass } = req.body;
+  User.find({ email: email }, function (err, user) {
+    if (user && user[0].password == oldPass) {
+      user[0].password = password;
+      user[0].age = age;
+      user[0].gender = gender;
+      user[0].save().then(
+        function () {
+          return res.json(201, {
+            data: {
+              message: "successfully updated",
+              success: true,
+            },
+          });
+        },
+        function (errr) {
+          return res.json(401, {
+            data: {
+              message: "updated error",
+              success: false,
+            },
+          });
+        }
+      );
+    } else {
+      return res.json(201, {
+        data: {
+          message: "updated error please check your password",
+          success: false,
+        },
+      });
+    }
+    //
   });
 };

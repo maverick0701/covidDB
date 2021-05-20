@@ -1,7 +1,8 @@
+const env = require("./environment");
 const mongoose = require("mongoose");
 
 mongoose.connect(
-  `mongodb+srv://maverick:amanis3937@cluster0.s0lia.mongodb.net/coviDb?retryWrites=true&w=majority`
+  `mongodb+srv://${env.dbName}:${env.dbPass}@cluster0.s0lia.mongodb.net/coviDb?retryWrites=true&w=majority`
 );
 const db = mongoose.connection;
 db.once("open", function () {

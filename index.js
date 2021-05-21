@@ -15,8 +15,8 @@ let chatsSockets = require("./config/chatSocket").chatSockets(chatServer);
 // let chatEngine = new chatsSockets.ChatEngine(chatServer);
 // chatEngine.connectionHandler();
 chatServer.listen(5000);
-app.options("http://localhost:3000/", cors());
-app.options("http://localhost:5000/", cors());
+app.options("*", cors());
+app.options("*", cors());
 
 app.use(express.urlencoded());
 app.use(passport.initialize());
